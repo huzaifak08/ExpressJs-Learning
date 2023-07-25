@@ -32,16 +32,24 @@ const Playlist = new mongoose.model("Playlist", playlistSchema); // Playlist is 
 
 const createDoc = async () => {
     try {
-        const reactPlaylist = new Playlist({
-            name: "React Playlist",
+        const nodePlaylist = new Playlist({
+            name: "Node JS",
+            ctype: "Backend",
+            videos: 100,
+            author: "Thapa Bhai",
+            active: true
+        });
+
+        const flutterPlaylist = new Playlist({
+            name: "Flutter",
             ctype: "Fronend",
-            videos: 80,
+            videos: 10,
             author: "Thapa Bhai",
             active: true
         });
 
         // reactPlaylist.save(); // This return promise so we can await here.
-        const result = await reactPlaylist.save();
+        const result = await Playlist.insertMany([nodePlaylist, flutterPlaylist]);
         console.log(result);
     } catch (e) {
         console.log(e.message);
