@@ -49,6 +49,8 @@ const createDoc = async () => {
         });
 
         // reactPlaylist.save(); // This return promise so we can await here.
+        // const result = await reactPlaylist.save(); // Save One Documnet.
+
         const result = await Playlist.insertMany([nodePlaylist, flutterPlaylist]);
         console.log(result);
     } catch (e) {
