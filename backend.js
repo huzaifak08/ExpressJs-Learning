@@ -59,4 +59,18 @@ const createDoc = async () => {
 
 };
 
-createDoc();
+// createDoc();
+
+// Read Data:
+const getDocument = async () => {
+    try {
+        // const result = await Playlist.find(); // Read all documents
+        // const result = await Playlist.find({ ctype: "Fronend" }); // Only Read docs where ctype: "Fronend"
+        const result = await Playlist.find({ ctype: "Fronend" }).select({ name: 1 }) // with only name.
+        console.log(result);
+    } catch (e) {
+        console.log(e.message);
+    }
+}
+
+getDocument();
