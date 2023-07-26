@@ -99,7 +99,25 @@ const getDocument = async () => {
             .find({ $and: [{ ctype: 'Backend' }, { videos: 80 }] })
             .select({ name: 1 });
 
-        console.log(result7);
+        // Count:
+        const result8 = await Playlist
+            .find({ $and: [{ ctype: 'Fronend' }, { videos: 80 }] })
+            .select({ name: 1 })
+            // .count(); if incase it don't work use:
+            .countDocuments();
+
+        // Sort:
+        const result9 = await Playlist
+            .find()
+            .select({ name: 1 })
+            .sort("name : 1"); // Ascending: -->(Spacing*)
+
+        const result10 = await Playlist
+            .find()
+            .select({ name: 1 })
+            .sort({ name: -1 }); // Descending: -->(Braces*)
+
+        console.log(result10);
 
     } catch (e) {
         console.log(e.message);
