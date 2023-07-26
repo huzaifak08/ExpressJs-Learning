@@ -72,6 +72,7 @@ const getDocument = async () => {
             .select({ name: 1 }) // with only name.
             .limit(1); // Only 1 document.
 
+        // Comparison operators:
         // Show the documents with videos greater than 10
         const result3 = await Playlist
             .find({ videos: { $gt: 10 } })
@@ -87,8 +88,18 @@ const getDocument = async () => {
             .find({ ctype: { $nin: ["Backend", "Fronend"] } })
             .select({ name: 1 });
 
+        // Logical Operators:
+        // OR Operator:
+        const result6 = await Playlist
+            .find({ $or: [{ ctype: 'Backend' }, { videos: 80 }] })
+            .select({ name: 1 });
 
-        // console.log(result5);
+        // AND Operator:
+        const result7 = await Playlist
+            .find({ $and: [{ ctype: 'Backend' }, { videos: 80 }] })
+            .select({ name: 1 });
+
+        console.log(result7);
 
     } catch (e) {
         console.log(e.message);
