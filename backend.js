@@ -64,10 +64,32 @@ const createDoc = async () => {
 // Read Data:
 const getDocument = async () => {
     try {
-        // const result = await Playlist.find(); // Read all documents
-        // const result = await Playlist.find({ ctype: "Fronend" }); // Only Read docs where ctype: "Fronend"
-        const result = await Playlist.find({ ctype: "Fronend" }).select({ name: 1 }) // with only name.
-        console.log(result);
+        const result = await Playlist.find(); // Read all documents
+        const result1 = await Playlist.find({ ctype: "Fronend" }); // Only Read docs where ctype: "Fronend"
+
+        const result2 = await Playlist
+            .find({ ctype: "Fronend" })
+            .select({ name: 1 }) // with only name.
+            .limit(1); // Only 1 document.
+
+        // Show the documents with videos greater than 10
+        const result3 = await Playlist
+            .find({ videos: { $gt: 10 } })
+            .select({ name: 1 });
+
+        // Show all documents with "ctype":"Fronend" and "Backend"
+        const result4 = await Playlist
+            .find({ ctype: { $in: ["Backend", "Fronend"] } })
+            .select({ name: 1 });
+
+        // Show all documents without "ctype":"Fronend" and "Backend"
+        const result5 = await Playlist
+            .find({ ctype: { $nin: ["Backend", "Fronend"] } })
+            .select({ name: 1 });
+
+
+        // console.log(result5);
+
     } catch (e) {
         console.log(e.message);
     }
