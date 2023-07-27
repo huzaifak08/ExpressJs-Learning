@@ -161,4 +161,23 @@ const updateDocument = async (_id) => {
     }
 }
 
-updateDocument("64bfff1862afc8bfacc19ac5");
+// updateDocument("64bfff1862afc8bfacc19ac5");
+
+// Delete Document:
+const deleteDocument = async (_id) => {
+    try {
+
+        // Delete Document and only return true or false:
+        const result = await Playlist.deleteOne({ _id: _id });
+
+        // Delete Document but also print the whole document:
+        const result2 = await Playlist.findByIdAndDelete({ _id: _id });
+
+        console.log(result2);
+
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+deleteDocument("64c02194fc90c676d04865ca");
