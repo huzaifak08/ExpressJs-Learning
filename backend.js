@@ -124,4 +124,41 @@ const getDocument = async () => {
     }
 }
 
-getDocument();
+// getDocument();
+
+// Update Document:
+const updateDocument = async (_id) => {
+    try {
+
+        // Update but only show message in modified or not:
+        const result = await Playlist.updateOne({ _id }, {
+            $set: {
+                ctype: "Frontend"
+            }
+        });
+
+        // Update and also print the document:
+        const result2 = await Playlist.findByIdAndUpdate({ _id }, {
+            $set: {
+                ctype: "Frontend"
+            }
+        });
+
+        // If the above show deprecated error then do this:
+        const result3 = await Playlist.findByIdAndUpdate({ _id }, {
+            $set: {
+                ctype: "Frontend"
+            }
+        }, {
+            new: true,
+            useFindAndModify: false
+        });
+
+        console.log(result3);
+
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+updateDocument("64bfff1862afc8bfacc19ac5");
