@@ -13,8 +13,18 @@ const playlistSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    ctype: String,
-    videos: Number,
+    ctype: {
+        type: String,
+        enum: ["Backend", "Fronend", "Database"] // Build in Validations
+    },
+    videos: {
+        type: String,
+        validate(value) {
+            if (value < 0) {
+                throw Error('Videos count cannot be negative');
+            };
+        }
+    },
     author: String,
     active: Boolean,
     date: {
@@ -41,17 +51,17 @@ const createDoc = async () => {
         });
 
         const flutterPlaylist = new Playlist({
-            name: "Flutter",
+            name: "Flutter UI",
             ctype: "Fronend",
-            videos: 10,
+            videos: -5,
             author: "Thapa Bhai",
             active: true
         });
 
         // reactPlaylist.save(); // This return promise so we can await here.
-        // const result = await reactPlaylist.save(); // Save One Documnet.
+        const result = await flutterPlaylist.save(); // Save One Documnet.
 
-        const result = await Playlist.insertMany([nodePlaylist, flutterPlaylist]);
+        // const result = await Playlist.insertMany([nodePlaylist, flutterPlaylist]);
         console.log(result);
     } catch (e) {
         console.log(e.message);
@@ -180,4 +190,5 @@ const deleteDocument = async (_id) => {
     }
 }
 
-deleteDocument("64c02194fc90c676d04865ca");
+// deleteDocument("64c02194fc90c676d04865ca");
+
