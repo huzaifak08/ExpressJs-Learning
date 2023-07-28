@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 // Creating Connection and Database(myTodo):
 mongoose.connect("mongodb://localhost:27017/myTodo").then(() => {
@@ -26,6 +27,16 @@ const playlistSchema = new mongoose.Schema({
         }
     },
     author: String,
+    email: {
+        type: String,
+        require: true,
+        unique: true,
+        validate(value) { // Using Validator package for validation.
+            if (!validator.isEmail(value)) {
+                throw new Error('Email is not valid');
+            }
+        }
+    },
     active: Boolean,
     date: {
         type: Date,
@@ -47,6 +58,7 @@ const createDoc = async () => {
             ctype: "Backend",
             videos: 100,
             author: "Thapa Bhai",
+            email: 'foo@baaz',
             active: true
         });
 
@@ -59,7 +71,7 @@ const createDoc = async () => {
         });
 
         // reactPlaylist.save(); // This return promise so we can await here.
-        const result = await flutterPlaylist.save(); // Save One Documnet.
+        const result = await nodePlaylist.save(); // Save One Documnet.
 
         // const result = await Playlist.insertMany([nodePlaylist, flutterPlaylist]);
         console.log(result);
@@ -69,7 +81,7 @@ const createDoc = async () => {
 
 };
 
-// createDoc();
+createDoc();
 
 // Read Data:
 const getDocument = async () => {
